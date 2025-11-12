@@ -69,6 +69,52 @@ const ReviewList = () => {
     return avg.toFixed(1);
   };
 
+  const renderSlider = (score) => {
+    // 0-10 점수를 0-100% 너비로 변환
+    const percentage = (score / 10) * 100;
+
+    // 점수에 따라 색상 그라데이션 계산
+    // 0점: 흰색 (255, 255, 255)
+    // 3점: 노랑 (255, 255, 0)
+    // 7점: 주황 (255, 165, 0)
+    // 10점: 빨강 (255, 0, 0)
+    let r, g, b;
+
+    if (score <= 3) {
+      // 0-3점: 흰색 → 노랑
+      const ratio = score / 3;
+      r = 255;
+      g = 255;
+      b = Math.round(255 * (1 - ratio));
+    } else if (score <= 7) {
+      // 3-7점: 노랑 → 주황
+      const ratio = (score - 3) / 4;
+      r = 255;
+      g = Math.round(255 - (90 * ratio)); // 255 → 165
+      b = 0;
+    } else {
+      // 7-10점: 주황 → 빨강
+      const ratio = (score - 7) / 3;
+      r = 255;
+      g = Math.round(165 * (1 - ratio)); // 165 → 0
+      b = 0;
+    }
+
+    const color = `rgb(${r}, ${g}, ${b})`;
+
+    return (
+      <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div
+          className="h-full rounded-full transition-all"
+          style={{
+            width: `${percentage}%`,
+            backgroundColor: color
+          }}
+        />
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -162,15 +208,32 @@ const ReviewList = () => {
                       <span>{review.timeRemaining}분 남음</span>
                     </div>
                   </div>
-                  {review.review && (
-                    <p className="mt-3 text-gray-700 line-clamp-2">
-                      {review.review}
-                    </p>
-                  )}
                 </div>
               </div>
-              <div className="text-3xl font-bold text-blue-500">
-                {calculateTotalScore(review.scores)}
+              <div className="flex flex-col items-end">
+                <div className="text-3xl font-bold text-blue-500 mb-3">
+                  {calculateTotalScore(review.scores)}
+                </div>
+                <div className="space-y-2 text-sm">
+                  {review.difficulty !== undefined && (
+                    <div className="flex items-center gap-2">
+                      <span>🔒</span>
+                      {renderSlider(review.difficulty)}
+                    </div>
+                  )}
+                  {review.horror !== undefined && (
+                    <div className="flex items-center gap-2">
+                      <span>👻</span>
+                      {renderSlider(review.horror)}
+                    </div>
+                  )}
+                  {review.activity !== undefined && (
+                    <div className="flex items-center gap-2">
+                      <span>🏃</span>
+                      {renderSlider(review.activity)}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

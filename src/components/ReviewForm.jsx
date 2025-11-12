@@ -39,6 +39,9 @@ const ReviewForm = () => {
       price: 5,
       design: 5,
     },
+    difficulty: 5,
+    horror: 5,
+    activity: 5,
     review: "",
   });
 
@@ -475,6 +478,76 @@ const ReviewForm = () => {
                 onChange={handleChange}
                 min="0"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 추가 정보 */}
+        <div className="bg-white rounded-lg p-6 shadow-sm">
+          <h2 className="text-xl font-bold mb-6">추가 정보</h2>
+          <div className="space-y-6">
+            <div>
+              <div className="flex justify-between mb-2">
+                <label className="font-medium">🔒 난이도</label>
+                <span className="text-blue-500 font-bold">
+                  {formData.difficulty}점
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={formData.difficulty}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    difficulty: parseInt(e.target.value),
+                  }))
+                }
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+              />
+            </div>
+            <div>
+              <div className="flex justify-between mb-2">
+                <label className="font-medium">👻 공포도</label>
+                <span className="text-blue-500 font-bold">
+                  {formData.horror}점
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={formData.horror}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    horror: parseInt(e.target.value),
+                  }))
+                }
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+              />
+            </div>
+            <div>
+              <div className="flex justify-between mb-2">
+                <label className="font-medium">🏃 활동성</label>
+                <span className="text-blue-500 font-bold">
+                  {formData.activity}점
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={formData.activity}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    activity: parseInt(e.target.value),
+                  }))
+                }
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
           </div>
