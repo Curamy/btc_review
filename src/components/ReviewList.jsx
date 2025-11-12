@@ -263,32 +263,32 @@ const ReviewList = () => {
                       </div>
                     )}
                   </div>
-                  {/* PC: 기존 방식 */}
-                  <div className="hidden md:flex gap-4 text-sm">
-                    {review.difficulty !== undefined && (
-                      <div className="flex items-center gap-2">
-                        <span>🔒</span>
-                        {renderSlider(review.difficulty)}
-                      </div>
-                    )}
-                    {review.horror !== undefined && (
-                      <div className="flex items-center gap-2">
-                        <span>👻</span>
-                        {renderSlider(review.horror)}
-                      </div>
-                    )}
-                    {review.activity !== undefined && (
-                      <div className="flex items-center gap-2">
-                        <span>🏃</span>
-                        {renderSlider(review.activity)}
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 flex flex-col items-end gap-3">
                 <div className="text-2xl md:text-3xl font-bold text-blue-500 whitespace-nowrap">
                   {calculateTotalScore(review.scores)}
+                </div>
+                {/* PC: 점수 아래 세로 배치 */}
+                <div className="hidden md:flex flex-col gap-2 text-sm">
+                  {review.difficulty !== undefined && (
+                    <div className="flex items-center gap-2">
+                      <span>🔒</span>
+                      {renderSlider(review.difficulty)}
+                    </div>
+                  )}
+                  {review.horror !== undefined && (
+                    <div className="flex items-center gap-2">
+                      <span>👻</span>
+                      {renderSlider(review.horror)}
+                    </div>
+                  )}
+                  {review.activity !== undefined && (
+                    <div className="flex items-center gap-2">
+                      <span>🏃</span>
+                      {renderSlider(review.activity)}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
