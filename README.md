@@ -133,7 +133,7 @@ firebase deploy
 ## 프로젝트 구조
 
 ```
-escape-room-reviews/
+btc_review/
 ├── src/
 │   ├── components/
 │   │   ├── ReviewList.jsx      # 메인 리스트 페이지
