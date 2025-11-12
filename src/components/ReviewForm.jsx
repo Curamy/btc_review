@@ -42,6 +42,7 @@ const ReviewForm = () => {
     difficulty: 5,
     horror: 5,
     activity: 5,
+    deviceRatio: 5,
     review: "",
   });
 
@@ -550,6 +551,29 @@ const ReviewForm = () => {
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
+            <div>
+              <div className="flex justify-between mb-2">
+                <label className="font-medium">
+                  ⚙️ 장치 비율 (장치 : 자물쇠)
+                </label>
+                <span className="text-blue-500 font-bold">
+                  {formData.deviceRatio}:{10 - formData.deviceRatio}
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="10"
+                value={formData.deviceRatio}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    deviceRatio: parseInt(e.target.value),
+                  }))
+                }
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+              />
+            </div>
           </div>
         </div>
 
@@ -558,15 +582,42 @@ const ReviewForm = () => {
           <h2 className="text-xl font-bold mb-6">평가</h2>
           <div className="space-y-6">
             {[
-              { key: "fun", label: "순수 재미" },
-              { key: "completion", label: "완성도" },
-              { key: "immersion", label: "몰입감" },
-              { key: "price", label: "가격" },
-              { key: "design", label: "디자인" },
-            ].map(({ key, label }) => (
+              {
+                key: "fun",
+                label: "순수재미",
+                description:
+                  "방탈출의 플레이어로서 얼마나 즐겁고 흥미로웠는지, 신선하거나 독창적인 요소를 포함한 전체적인 만족감",
+              },
+              {
+                key: "completion",
+                label: "완성도",
+                description:
+                  "장치나 시스템의 오류, 적절한 문제 구성과 난이도, 진행의 매끄러움 등 방탈출의 퀄리티",
+              },
+              {
+                key: "immersion",
+                label: "몰입감",
+                description:
+                  "스토리의 개연성, 직원의 연기와 연출의 자연스러움 등 테마 속에 빠져들게 하는지 여부",
+              },
+              {
+                key: "price",
+                label: "가성비",
+                description: "테마의 만족도와 볼륨이 가격 대비 적절한지 여부",
+              },
+              {
+                key: "design",
+                label: "디자인",
+                description:
+                  "인테리어, 소품, 공간 연출 등 시각적·감각적으로 만족을 주는지 여부",
+              },
+            ].map(({ key, label, description }) => (
               <div key={key}>
                 <div className="flex justify-between mb-2">
-                  <label className="font-medium">{label}</label>
+                  <div>
+                    <label className="font-medium">{label}</label>
+                    <p className="text-xs text-gray-500 mt-1">{description}</p>
+                  </div>
                   <span className="text-blue-500 font-bold">
                     {formData.scores[key]}점
                   </span>

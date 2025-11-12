@@ -164,10 +164,10 @@ const ReviewDetail = () => {
       </div>
 
       {/* 추가 정보 */}
-      {(review.difficulty !== undefined || review.horror !== undefined || review.activity !== undefined) && (
+      {(review.difficulty !== undefined || review.horror !== undefined || review.activity !== undefined || review.deviceRatio !== undefined) && (
         <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
           <h2 className="text-xl font-bold mb-4">추가 정보</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {review.difficulty !== undefined && (
               <div>
                 <div className="text-sm text-gray-600 mb-1">🔒 난이도</div>
@@ -184,6 +184,12 @@ const ReviewDetail = () => {
               <div>
                 <div className="text-sm text-gray-600 mb-1">🏃 활동성</div>
                 <div className="font-medium">{review.activity}점</div>
+              </div>
+            )}
+            {review.deviceRatio !== undefined && (
+              <div>
+                <div className="text-sm text-gray-600 mb-1">⚙️ 장치 비율 (장치 : 자물쇠)</div>
+                <div className="font-medium">{review.deviceRatio}:{10 - review.deviceRatio}</div>
               </div>
             )}
           </div>
