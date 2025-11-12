@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Radar,
   RadarChart,
@@ -9,6 +9,19 @@ import {
 } from "recharts";
 
 const ReviewRadarChart = ({ currentTheme, averageScores }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const data = [
     {
       category: "순수재미",
@@ -51,7 +64,7 @@ const ReviewRadarChart = ({ currentTheme, averageScores }) => {
     // 각 항목별로 위치 조정
     let adjustedY = y;
     if (payload.value === "순수재미") {
-      adjustedY = y - 25;
+      adjustedY = isMobile ? y - 10 : y - 25; // 모바일: y-10, PC: y-25
     } else if (payload.value === "가성비" || payload.value === "몰입감") {
       adjustedY = y + 10;
     }
@@ -74,6 +87,7 @@ const ReviewRadarChart = ({ currentTheme, averageScores }) => {
           textAnchor={x > cx ? "start" : x < cx ? "end" : "middle"}
           fill="#9ca3af"
           fontSize="10"
+          className="hidden md:block"
         >
           {data.find((d) => d.category === payload.value)?.description}
         </text>
@@ -82,41 +96,43 @@ const ReviewRadarChart = ({ currentTheme, averageScores }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm">
-      <h2 className="text-xl font-bold mb-4">평가</h2>
-      <ResponsiveContainer width="100%" height={450}>
-        <RadarChart data={data}>
-          <PolarGrid />
-          <PolarAngleAxis dataKey="category" tick={<CustomTick />} />
-          <PolarRadiusAxis
-            angle={90}
-            domain={[0, 10]}
-            ticks={[0, 2, 4, 6, 8, 10]}
-          />
-          <Radar
-            name="현재 테마"
-            dataKey="current"
-            stroke="#3b82f6"
-            fill="#3b82f6"
-            fillOpacity={0.6}
-          />
-          <Radar
-            name="전체 평균"
-            dataKey="average"
-            stroke="#ef4444"
-            fill="#ef4444"
-            fillOpacity={0.3}
-          />
-        </RadarChart>
-      </ResponsiveContainer>
-      <div className="flex justify-center gap-6 mt-4">
+    <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm">
+      <h2 className="text-lg md:text-xl font-bold mb-4">평가</h2>
+      <div className="w-full h-[350px] md:h-[450px] pt-4 md:pt-0">
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart data={data}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="category" tick={<CustomTick />} />
+            <PolarRadiusAxis
+              angle={90}
+              domain={[0, 10]}
+              ticks={[0, 2, 4, 6, 8, 10]}
+            />
+            <Radar
+              name="현재 테마"
+              dataKey="current"
+              stroke="#3b82f6"
+              fill="#3b82f6"
+              fillOpacity={0.6}
+            />
+            <Radar
+              name="전체 평균"
+              dataKey="average"
+              stroke="#ef4444"
+              fill="#ef4444"
+              fillOpacity={0.3}
+            />
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="flex justify-center gap-4 md:gap-6 mt-4">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-          <span className="text-sm">현재 테마</span>
+          <div className="w-3 h-3 md:w-4 md:h-4 bg-blue-500 rounded-full"></div>
+          <span className="text-xs md:text-sm">현재 테마</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-          <span className="text-sm">전체 평균</span>
+          <div className="w-3 h-3 md:w-4 md:h-4 bg-red-500 rounded-full"></div>
+          <span className="text-xs md:text-sm">전체 평균</span>
         </div>
       </div>
     </div>

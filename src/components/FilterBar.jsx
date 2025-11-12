@@ -34,7 +34,7 @@ const FilterBar = ({ onFilterChange, cafes, regions, genres }) => {
   };
 
   return (
-    <div className="flex gap-4 mb-6 flex-wrap">
+    <div className="flex gap-2 md:gap-4 mb-6 flex-wrap">
       {/* 지역별 필터 */}
       <div className="relative">
         <button
@@ -43,10 +43,10 @@ const FilterBar = ({ onFilterChange, cafes, regions, genres }) => {
             setShowCafeDropdown(false);
             setShowGenreDropdown(false);
           }}
-          className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+          className="px-3 md:px-4 py-1.5 md:py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2 text-sm md:text-base"
         >
           <span>{selectedRegion || '지역별'}</span>
-          <span>▼</span>
+          <span className="text-xs">▼</span>
         </button>
         {showRegionDropdown && (
           <div className="absolute top-full mt-1 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
@@ -77,10 +77,10 @@ const FilterBar = ({ onFilterChange, cafes, regions, genres }) => {
             setShowRegionDropdown(false);
             setShowGenreDropdown(false);
           }}
-          className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+          className="px-3 md:px-4 py-1.5 md:py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2 text-sm md:text-base"
         >
           <span>{selectedCafe || '카페별'}</span>
-          <span>▼</span>
+          <span className="text-xs">▼</span>
         </button>
         {showCafeDropdown && (
           <div className="absolute top-full mt-1 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
@@ -111,10 +111,10 @@ const FilterBar = ({ onFilterChange, cafes, regions, genres }) => {
             setShowRegionDropdown(false);
             setShowCafeDropdown(false);
           }}
-          className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2"
+          className="px-3 md:px-4 py-1.5 md:py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-2 text-sm md:text-base"
         >
           <span>{selectedGenre || '장르별'}</span>
-          <span>▼</span>
+          <span className="text-xs">▼</span>
         </button>
         {showGenreDropdown && (
           <div className="absolute top-full mt-1 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
@@ -141,7 +141,7 @@ const FilterBar = ({ onFilterChange, cafes, regions, genres }) => {
       {(selectedRegion || selectedCafe || selectedGenre) && (
         <button
           onClick={clearFilters}
-          className="px-4 py-2 text-blue-600 hover:text-blue-800 flex items-center gap-2"
+          className="px-3 md:px-4 py-1.5 md:py-2 text-blue-600 hover:text-blue-800 flex items-center gap-1 md:gap-2 text-sm md:text-base"
         >
           <span>✕</span>
           <span>필터 해제</span>

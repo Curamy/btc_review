@@ -613,12 +613,12 @@ const ReviewForm = () => {
               },
             ].map(({ key, label, description }) => (
               <div key={key}>
-                <div className="flex justify-between mb-2">
-                  <div>
+                <div className="flex justify-between items-start mb-2 gap-4">
+                  <div className="flex-1 min-w-0">
                     <label className="font-medium">{label}</label>
                     <p className="text-xs text-gray-500 mt-1">{description}</p>
                   </div>
-                  <span className="text-blue-500 font-bold">
+                  <span className="text-blue-500 font-bold whitespace-nowrap flex-shrink-0">
                     {formData.scores[key]}점
                   </span>
                 </div>

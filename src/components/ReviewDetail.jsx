@@ -106,90 +106,90 @@ const ReviewDetail = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-4 md:p-6">
       <button
         onClick={() => navigate('/')}
-        className="mb-6 text-gray-600 hover:text-gray-900 flex items-center gap-2"
+        className="mb-4 md:mb-6 text-gray-600 hover:text-gray-900 flex items-center gap-2 text-sm md:text-base"
       >
         <span>←</span>
         <span>목록으로</span>
       </button>
 
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h1 className="text-4xl font-bold mb-2">{review.themeName}</h1>
-          <div className="flex gap-2 mb-4">
-            <span className="text-lg text-gray-600">{review.cafe}</span>
-            <span className="text-lg text-gray-400">|</span>
-            <span className="text-lg text-blue-600">{review.region}</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {review.genres && review.genres.map((genre, i) => (
-              <span key={i} className="px-3 py-1 bg-gray-100 rounded-full text-sm">
-                {genre}
-              </span>
-            ))}
+      <div className="mb-6">
+        <div className="flex justify-between items-start gap-4 mb-2">
+          <h1 className="text-2xl md:text-4xl font-bold flex-1 min-w-0">{review.themeName}</h1>
+          <div className="text-3xl md:text-5xl font-bold text-blue-500 flex-shrink-0">
+            {calculateTotalScore(review.scores)}
           </div>
         </div>
-        <div className="text-5xl font-bold text-blue-500">
-          {calculateTotalScore(review.scores)}
+        <div className="flex gap-2 mb-3 md:mb-4 text-sm md:text-lg">
+          <span className="text-gray-600 truncate">{review.cafe}</span>
+          <span className="text-gray-400">|</span>
+          <span className="text-blue-600 truncate">{review.region}</span>
+        </div>
+        <div className="flex flex-wrap gap-1.5 md:gap-2">
+          {review.genres && review.genres.map((genre, i) => (
+            <span key={i} className="px-2 md:px-3 py-0.5 md:py-1 bg-gray-100 rounded-full text-xs md:text-sm">
+              {genre}
+            </span>
+          ))}
         </div>
       </div>
 
-      <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
           <div>
-            <div className="text-sm text-gray-600 mb-1">플레이 날짜</div>
-            <div className="font-medium">{review.visitDate}</div>
+            <div className="text-xs md:text-sm text-gray-600 mb-1">플레이 날짜</div>
+            <div className="text-sm md:text-base font-medium">{review.visitDate}</div>
           </div>
           <div>
-            <div className="text-sm text-gray-600 mb-1">플레이 인원</div>
-            <div className="font-medium">{review.participants}명</div>
+            <div className="text-xs md:text-sm text-gray-600 mb-1">플레이 인원</div>
+            <div className="text-sm md:text-base font-medium">{review.participants}명</div>
           </div>
           <div>
-            <div className="text-sm text-gray-600 mb-1">탈출 여부</div>
-            <div className={`font-medium ${review.success ? 'text-green-600' : 'text-red-600'}`}>
+            <div className="text-xs md:text-sm text-gray-600 mb-1">탈출 여부</div>
+            <div className={`text-sm md:text-base font-medium ${review.success ? 'text-green-600' : 'text-red-600'}`}>
               {review.success ? '성공' : '실패'}
             </div>
           </div>
           <div>
-            <div className="text-sm text-gray-600 mb-1">사용한 힌트 수</div>
-            <div className="font-medium">{review.hintsUsed}개</div>
+            <div className="text-xs md:text-sm text-gray-600 mb-1">사용한 힌트 수</div>
+            <div className="text-sm md:text-base font-medium">{review.hintsUsed}개</div>
           </div>
           <div>
-            <div className="text-sm text-gray-600 mb-1">남은 시간</div>
-            <div className="font-medium">{review.timeRemaining}분</div>
+            <div className="text-xs md:text-sm text-gray-600 mb-1">남은 시간</div>
+            <div className="text-sm md:text-base font-medium">{review.timeRemaining}분</div>
           </div>
         </div>
       </div>
 
       {/* 추가 정보 */}
       {(review.difficulty !== undefined || review.horror !== undefined || review.activity !== undefined || review.deviceRatio !== undefined) && (
-        <div className="bg-white rounded-lg p-6 shadow-sm mb-6">
-          <h2 className="text-xl font-bold mb-4">추가 정보</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm mb-6">
+          <h2 className="text-lg md:text-xl font-bold mb-4">추가 정보</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {review.difficulty !== undefined && (
               <div>
-                <div className="text-sm text-gray-600 mb-1">🔒 난이도</div>
-                <div className="font-medium">{review.difficulty}점</div>
+                <div className="text-xs md:text-sm text-gray-600 mb-1">🔒 난이도</div>
+                <div className="text-sm md:text-base font-medium">{review.difficulty}점</div>
               </div>
             )}
             {review.horror !== undefined && (
               <div>
-                <div className="text-sm text-gray-600 mb-1">👻 공포도</div>
-                <div className="font-medium">{review.horror}점</div>
+                <div className="text-xs md:text-sm text-gray-600 mb-1">👻 공포도</div>
+                <div className="text-sm md:text-base font-medium">{review.horror}점</div>
               </div>
             )}
             {review.activity !== undefined && (
               <div>
-                <div className="text-sm text-gray-600 mb-1">🏃 활동성</div>
-                <div className="font-medium">{review.activity}점</div>
+                <div className="text-xs md:text-sm text-gray-600 mb-1">🏃 활동성</div>
+                <div className="text-sm md:text-base font-medium">{review.activity}점</div>
               </div>
             )}
             {review.deviceRatio !== undefined && (
               <div>
-                <div className="text-sm text-gray-600 mb-1">⚙️ 장치 비율 (장치 : 자물쇠)</div>
-                <div className="font-medium">{review.deviceRatio}:{10 - review.deviceRatio}</div>
+                <div className="text-xs md:text-sm text-gray-600 mb-1">⚙️ 장치 비율</div>
+                <div className="text-sm md:text-base font-medium">{review.deviceRatio}:{10 - review.deviceRatio}</div>
               </div>
             )}
           </div>
@@ -199,24 +199,24 @@ const ReviewDetail = () => {
       <ReviewRadarChart currentTheme={review} averageScores={averageScores} />
 
       {review.review && (
-        <div className="bg-white rounded-lg p-6 shadow-sm mt-6">
-          <h2 className="text-xl font-bold mb-4">후기</h2>
-          <p className="text-gray-700 whitespace-pre-wrap">{review.review}</p>
+        <div className="bg-white rounded-lg p-4 md:p-6 shadow-sm mt-6">
+          <h2 className="text-lg md:text-xl font-bold mb-4">후기</h2>
+          <p className="text-sm md:text-base text-gray-700 whitespace-pre-wrap">{review.review}</p>
         </div>
       )}
 
       {user && (
-        <div className="flex gap-4 mt-6">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 mt-6">
           <button
             onClick={() => navigate(`/edit/${review.id}`)}
-            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
+            className="px-4 md:px-6 py-2 md:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center justify-center gap-2 text-sm md:text-base"
           >
             <span>✏️</span>
             <span>수정</span>
           </button>
           <button
             onClick={handleDelete}
-            className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 flex items-center gap-2"
+            className="px-4 md:px-6 py-2 md:py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 flex items-center justify-center gap-2 text-sm md:text-base"
           >
             <span>🗑️</span>
             <span>삭제</span>
