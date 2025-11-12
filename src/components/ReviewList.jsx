@@ -124,17 +124,17 @@ const ReviewList = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <div className="flex justify-between items-center mb-8">
+    <div className="max-w-6xl mx-auto p-4 md:p-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 md:mb-8">
         <div>
-          <h1 className="text-3xl font-bold mb-2">쿠람이의 탈출 기록</h1>
-          <p className="text-gray-600">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">쿠람이의 탈출 기록</h1>
+          <p className="text-sm md:text-base text-gray-600">
             총 {filteredReviews.length}개의 방을 탈출했습니다
           </p>
         </div>
         <button
           onClick={() => navigate("/create")}
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
+          className="w-full md:w-auto px-4 md:px-6 py-2 md:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center justify-center gap-2 text-sm md:text-base"
         >
           <span>+</span>
           <span>리뷰 작성</span>
@@ -153,34 +153,68 @@ const ReviewList = () => {
           <div
             key={review.id}
             onClick={() => navigate(`/review/${review.id}`)}
-            className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+            className="bg-white rounded-lg p-4 md:p-6 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
           >
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4 flex-1">
-                <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full text-blue-600 font-bold">
+            <div className="flex justify-between items-start gap-4">
+              <div className="flex gap-3 md:gap-4 flex-1 min-w-0">
+                <div className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full text-blue-600 font-bold flex-shrink-0 text-sm md:text-base">
                   {index + 1}
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-1">{review.themeName}</h3>
-                  <div className="flex gap-2 mb-3">
-                    <span className="text-sm text-gray-600">{review.cafe}</span>
-                    <span className="text-sm text-gray-400">|</span>
-                    <span className="text-sm text-blue-600">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg md:text-xl font-bold mb-1 truncate">{review.themeName}</h3>
+                  <div className="flex gap-2 mb-2 md:mb-3 text-xs md:text-sm">
+                    <span className="text-gray-600 truncate">{review.cafe}</span>
+                    <span className="text-gray-400">|</span>
+                    <span className="text-blue-600 truncate">
                       {review.region}
                     </span>
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2 md:mb-3">
                     {review.genres &&
                       review.genres.map((genre, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1 bg-gray-100 rounded-full text-sm"
+                          className="px-2 md:px-3 py-0.5 md:py-1 bg-gray-100 rounded-full text-xs md:text-sm"
                         >
                           {genre}
                         </span>
                       ))}
                   </div>
-                  <div className="flex gap-6 text-sm text-gray-600">
+                  {/* 모바일: 2줄로 표시 */}
+                  <div className="md:hidden space-y-1 mb-2 text-xs text-gray-600">
+                    <div className="flex gap-3">
+                      <div className="flex items-center gap-1">
+                        <span>📅</span>
+                        <span>{review.visitDate}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span>👥</span>
+                        <span>{review.participants}명</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span
+                          className={
+                            review.success ? "text-green-600" : "text-red-600"
+                          }
+                        >
+                          {review.success ? "✓" : "✗"}
+                        </span>
+                        <span>{review.success ? "탈출 성공" : "탈출 실패"}</span>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex items-center gap-1">
+                        <span>💡</span>
+                        <span>힌트 {review.hintsUsed}개</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span>⏱️</span>
+                        <span>{review.timeRemaining}분 남음</span>
+                      </div>
+                    </div>
+                  </div>
+                  {/* PC: 한 줄로 표시 */}
+                  <div className="hidden md:flex gap-6 mb-2 text-sm text-gray-600">
                     <div className="flex items-center gap-1">
                       <span>📅</span>
                       <span>{review.visitDate}</span>
@@ -208,31 +242,53 @@ const ReviewList = () => {
                       <span>{review.timeRemaining}분 남음</span>
                     </div>
                   </div>
+                  {/* 모바일: width 33%로 균등 배치 */}
+                  <div className="flex md:hidden gap-2 text-xs">
+                    {review.difficulty !== undefined && (
+                      <div className="flex items-center gap-1" style={{ width: "33%" }}>
+                        <span>🔒</span>
+                        {renderSlider(review.difficulty)}
+                      </div>
+                    )}
+                    {review.horror !== undefined && (
+                      <div className="flex items-center gap-1" style={{ width: "33%" }}>
+                        <span>👻</span>
+                        {renderSlider(review.horror)}
+                      </div>
+                    )}
+                    {review.activity !== undefined && (
+                      <div className="flex items-center gap-1" style={{ width: "33%" }}>
+                        <span>🏃</span>
+                        {renderSlider(review.activity)}
+                      </div>
+                    )}
+                  </div>
+                  {/* PC: 기존 방식 */}
+                  <div className="hidden md:flex gap-4 text-sm">
+                    {review.difficulty !== undefined && (
+                      <div className="flex items-center gap-2">
+                        <span>🔒</span>
+                        {renderSlider(review.difficulty)}
+                      </div>
+                    )}
+                    {review.horror !== undefined && (
+                      <div className="flex items-center gap-2">
+                        <span>👻</span>
+                        {renderSlider(review.horror)}
+                      </div>
+                    )}
+                    {review.activity !== undefined && (
+                      <div className="flex items-center gap-2">
+                        <span>🏃</span>
+                        {renderSlider(review.activity)}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col items-end">
-                <div className="text-3xl font-bold text-blue-500 mb-3">
+              <div className="flex-shrink-0">
+                <div className="text-2xl md:text-3xl font-bold text-blue-500 whitespace-nowrap">
                   {calculateTotalScore(review.scores)}
-                </div>
-                <div className="space-y-2 text-sm">
-                  {review.difficulty !== undefined && (
-                    <div className="flex items-center gap-2">
-                      <span>🔒</span>
-                      {renderSlider(review.difficulty)}
-                    </div>
-                  )}
-                  {review.horror !== undefined && (
-                    <div className="flex items-center gap-2">
-                      <span>👻</span>
-                      {renderSlider(review.horror)}
-                    </div>
-                  )}
-                  {review.activity !== undefined && (
-                    <div className="flex items-center gap-2">
-                      <span>🏃</span>
-                      {renderSlider(review.activity)}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
